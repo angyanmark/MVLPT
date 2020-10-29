@@ -1,0 +1,22 @@
+mat-toolbar {
+  .page-title {
+    font-size: 20px;
+  }
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .link-icon {
+    margin-right: 4px;
+  }
+
+  .active-link {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.container {
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+}

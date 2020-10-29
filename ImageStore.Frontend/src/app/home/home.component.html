@@ -1,0 +1,72 @@
+<div fxLayout="row wrap" fxLayoutAlign="center" style="padding: 8px">
+  <div
+    fxFlex="400px"
+    style="margin: 12px"
+    *ngFor="let item of images; last as last"
+  >
+    <mat-card class="mat-elevation-z4">
+      <img
+        mat-card-image
+        [src]="item.thumbnailUrl"
+        style="height: 400px; width: 400px; object-fit: cover"
+      />
+      <mat-card-content>
+        <div style="display: flex; justify-content: space-between">
+          <div>
+            <mat-card-title
+              style="
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-width: 280px;
+              "
+              >{{ item.fileName }}</mat-card-title
+            >
+            <mat-card-subtitle
+              style="
+                margin-bottom: 0;
+                white-space: nowrap;
+                max-width: 280px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              "
+              >{{ item.uploader }}</mat-card-subtitle
+            >
+          </div>
+          <div>
+            <a
+              style="margin-right: 8px"
+              [href]="item.url"
+              [download]="item.fileName"
+              mat-icon-button
+              matTooltip="Download"
+            >
+              <mat-icon>get_app</mat-icon>
+            </a>
+            <button mat-icon-button matTooltip="Comments">
+              <mat-icon>speaker_notes</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<input
+  hidden
+  (change)="uploadFile(fileInput.files); fileInput.value = ''"
+  #fileInput
+  type="file"
+  id="file"
+/>
+
+<button
+  style="position: fixed; right: 24px; bottom: 24px"
+  mat-fab
+  color="accent"
+  matTooltip="Upload"
+  (click)="fileInput.click()"
+>
+  <mat-icon>publish</mat-icon>
+</button>
