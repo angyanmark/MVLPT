@@ -11,8 +11,7 @@ import { RegisterDto } from 'src/app/api/app.generated';
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
-  loginInvalid: boolean;
-  formSubmitAttempt: boolean;
+  hidePassword: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -20,7 +19,7 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loginInvalid = false;
+    this.hidePassword = true;
 
     this.form = this.fb.group({
       username: [
@@ -33,11 +32,6 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.loginInvalid = false;
-    this.formSubmitAttempt = false;
-
-    console.log(this.form);
-
     if (this.form.valid) {
       try {
         this.authenticationService
@@ -52,11 +46,7 @@ export class RegisterComponent implements OnInit {
             })
           )
           .subscribe();
-      } catch (err) {
-        this.loginInvalid = true;
-      }
-    } else {
-      this.formSubmitAttempt = true;
+      } catch (err) {}
     }
   }
 }

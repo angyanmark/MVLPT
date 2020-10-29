@@ -13,6 +13,7 @@ import { SnackbarService } from 'src/app/core/snackbar/snackbar.service';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   loginInvalid: boolean;
+  hidePassword: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginInvalid = false;
+    this.hidePassword = true;
 
     this.form = this.fb.group({
       username: ['', Validators.required],
@@ -39,7 +41,6 @@ export class LoginComponent implements OnInit {
           .pipe(
             finalize(() => {
               this.form.markAsPristine();
-              // this.isLoading = false;
             })
           )
           .subscribe(
@@ -54,7 +55,6 @@ export class LoginComponent implements OnInit {
       } catch (err) {
         this.loginInvalid = true;
       }
-    } else {
     }
   }
 }
