@@ -12,7 +12,7 @@ int main(int argc, const char *argv[])
         return -1;
     }
 
-    std::array<char, 1024 * 1024> buff;
+    std::array<char, 10 * 1024> buff;
 
     std::string filePath = argv[1];
     std::ifstream in(filePath, std::ifstream::binary);
