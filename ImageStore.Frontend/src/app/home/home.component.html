@@ -1,8 +1,14 @@
+<div style="width: 100%; text-align: center; margin-top: 12px">
+  <mat-form-field appearance="outline" style="display: inline-block; width: 300px;">
+    <mat-label>Search</mat-label>
+    <input matInput [ngModel]="searchValue" (ngModelChange)="onSearch($event)" />
+  </mat-form-field>
+</div>
 <div fxLayout="row wrap" fxLayoutAlign="center" style="padding: 8px">
   <div
     fxFlex="400px"
     style="margin: 12px"
-    *ngFor="let item of images; last as last"
+    *ngFor="let item of filteredImages; last as last"
   >
     <mat-card class="mat-elevation-z4">
       <img

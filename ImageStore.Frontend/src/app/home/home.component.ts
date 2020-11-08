@@ -8,18 +8,25 @@ import { SnackbarService } from '../core/snackbar/snackbar.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  images: ImageDto[];
+  searchValue: String = '';
+  images: ImageDto[] = [];
+  filteredImages: ImageDto[] = [];
 
   constructor(
     private imageClient: ImageClient,
     private snackbarService: SnackbarService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.imageClient.getImages().subscribe(
-      (r) => (this.images = r),
+      (r) => { this.images = r; this.filteredImages = this.images},
       (error) => this.snackbarService.openError(error.detail)
     );
+  }
+
+  onSearch(value: String) {
+    this.searchValue = value;
+    this.filteredImages = this.images.filter(i => i.fileName.toLowerCase().includes(this.searchValue.toLowerCase()));
   }
 
   uploadFile(files): void {
