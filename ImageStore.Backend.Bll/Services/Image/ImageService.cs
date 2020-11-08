@@ -51,66 +51,70 @@ namespace ImageStore.Backend.Bll.Services.Image
                 throw new ImageStoreException($"'{extension}' extension is not allowed");
 
             var imageGuid = Guid.NewGuid();
-            var fileName = imageGuid + ".png";
-            var caffFileName = imageGuid + extension;
+            var pngName = imageGuid + ".png";
+            var originalExtensionFile = imageGuid + extension;
+
             var image = new Dal.Entities.Image
             {
-                FileName = fileName,
+                FileName = extension == ".caff" ? pngName : originalExtensionFile,
                 OriginalFileName = file.FileName,
                 Uploader = await _userManager.GetUserAsync(_user)
             };
 
             _dbContext.Images.Add(image);
 
-            var folderPath = Path.Combine(_imageOptions.RootPath, _imageOptions.FilesPath);
-            var filePath = Path.Combine(folderPath, fileName);
-            var caffFilePath = Path.Combine(folderPath, caffFileName);
+            var imagesFolderPath = Path.Combine(_imageOptions.RootPath, _imageOptions.FilesPath);
+            var pngFilePath = Path.Combine(imagesFolderPath, pngName);
+            var originalExtensionPath = Path.Combine(imagesFolderPath, originalExtensionFile);
 
-            if (!Directory.Exists(folderPath))
-                Directory.CreateDirectory(folderPath);
+            if (!Directory.Exists(imagesFolderPath))
+                Directory.CreateDirectory(imagesFolderPath);
 
-            using (var stream = new FileStream(caffFilePath, FileMode.Create))
+            using (var stream = new FileStream(originalExtensionPath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
-            // TODO: thumbnail generálás
 
-            var startInfo = new ProcessStartInfo("caff-parser.exe");
-            var hexData = "";
-            startInfo.UseShellExecute = false;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.Arguments = caffFilePath;
-            var process = new Process {StartInfo = startInfo};
-            var skip = 0;
-            process.OutputDataReceived += (sender, args) =>
+            if (extension == ".caff")
             {
-                if(args.Data is null) return;
-                if (args.Data.Length == 1)
+                var startInfo = new ProcessStartInfo("caff-parser.exe");
+                var hexData = "";
+                startInfo.UseShellExecute = false;
+                startInfo.RedirectStandardOutput = true;
+                startInfo.Arguments = originalExtensionPath;
+                var process = new Process {StartInfo = startInfo};
+                var skip = 0;
+                process.OutputDataReceived += (sender, args) =>
                 {
-                    skip = int.Parse(args.Data);
-                    return;
+                    if (args.Data is null) return;
+                    if (args.Data.Length == 1)
+                    {
+                        skip = int.Parse(args.Data);
+                        return;
+                    }
+
+                    if (skip != 0)
+                    {
+                        skip--;
+                        return;
+                    }
+
+                    hexData += args.Data;
+                };
+                process.Start();
+                process.BeginOutputReadLine();
+
+                process.WaitForExit();
+
+                var bytesCount = (hexData.Length) / 2;
+                var bytes = new byte[bytesCount];
+                for (var x = 0; x < bytesCount; ++x)
+                {
+                    bytes[x] = Convert.ToByte(hexData.Substring(x * 2, 2), 16);
                 }
 
-                if (skip != 0)
-                {
-                    skip--;
-                    return;
-                }
-                hexData += args.Data;
-            };
-            process.Start();
-            process.BeginOutputReadLine();
-
-            process.WaitForExit();
-
-            var bytesCount = (hexData.Length) / 2;
-            var bytes = new byte[bytesCount];
-            for (var x = 0; x < bytesCount; ++x)
-            {
-                bytes[x] = Convert.ToByte(hexData.Substring(x * 2, 2), 16);
+                await File.WriteAllBytesAsync(pngFilePath, bytes).ConfigureAwait(false);
             }
-
-            await File.WriteAllBytesAsync(filePath, bytes).ConfigureAwait(false);
 
             await _dbContext.SaveChangesAsync();
 
