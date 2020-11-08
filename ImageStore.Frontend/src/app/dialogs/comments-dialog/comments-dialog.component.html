@@ -8,16 +8,21 @@
             <mat-card-content>
                 <p style="white-space: pre-line; overflow-wrap: break-word;"> {{ comment.text }} </p>
             </mat-card-content>
+            <div *ngIf="credentialsService.isAdmin()" style="text-align: end;">
+                <button mat-icon-button matTooltip="Delete" (click)="onDeleteComment(comment.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
         </mat-card>
         <span>&nbsp;</span>
     </div>
 
     <mat-form-field appearance="fill" style="width: 100%">
         <mat-label>Comment</mat-label>
-        <textarea matInput [(ngModel)]="comment"></textarea>
+        <textarea matInput [(ngModel)]="comment" cdkFocusInitial></textarea>
     </mat-form-field>
     <div style="text-align: end;">
-        <button mat-raised-button color="primary" matTooltip="Send" (click)="onComment()">
+        <button mat-icon-button color="primary" matTooltip="Send" (click)="onComment()">
             <mat-icon>send</mat-icon>
         </button>
     </div>

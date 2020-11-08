@@ -6,16 +6,16 @@
 </div>
 <div fxLayout="row wrap" fxLayoutAlign="center" style="padding: 8px">
   <div
-    fxFlex="400px"
-    style="margin: 12px"
-    *ngFor="let item of filteredImages; last as last"
-  >
+       fxFlex="400px"
+       style="margin: 12px"
+       *ngFor="let item of filteredImages"
+    >
     <mat-card class="mat-elevation-z4">
       <img
-        mat-card-image
-        [src]="item.thumbnailUrl"
-        style="height: 400px; width: 400px; object-fit: cover"
-      />
+           mat-card-image
+           [src]="item.thumbnailUrl"
+           style="height: 400px; width: 400px; object-fit: cover"
+       />
       <mat-card-content>
         <div style="display: flex; justify-content: space-between">
           <div>
@@ -25,6 +25,7 @@
                 text-overflow: ellipsis;
                 overflow: hidden;
                 max-width: 280px;
+                height: 24px;
               "
               >{{ item.fileName }}</mat-card-title
             >
@@ -41,16 +42,19 @@
           </div>
           <div>
             <a
-              style="margin-right: 8px"
-              [href]="item.url"
-              [download]="item.fileName"
-              mat-icon-button
-              matTooltip="Download"
+               [href]="item.url"
+               [download]="item.fileName"
+               mat-icon-button
+               matTooltip="Download"
             >
               <mat-icon>get_app</mat-icon>
             </a>
             <button mat-icon-button matTooltip="Comments" (click)="openCommentsDialog(item.id)">
               <mat-icon>speaker_notes</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Delete" (click)="onDeleteImage(item.id)"
+              *ngIf="credentialsService.isAdmin()">
+              <mat-icon>delete</mat-icon>
             </button>
           </div>
         </div>
