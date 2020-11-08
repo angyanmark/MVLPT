@@ -1,11 +1,8 @@
-<div style="width: 100%; text-align: center;">
-  <mat-form-field appearance="outline" style="display: inline-block;">
+<div style="width: 100%; text-align: center; margin-top: 12px">
+  <mat-form-field appearance="outline" style="display: inline-block; width: 300px;">
     <mat-label>Search</mat-label>
     <input matInput [ngModel]="searchValue" (ngModelChange)="onSearch($event)" />
   </mat-form-field>
-  <label style="display: inline-block; margin: 0px 12px;">
-    Images: {{ filteredImages.length }}
-  </label>
 </div>
 <div fxLayout="row wrap" fxLayoutAlign="center" style="padding: 8px">
   <div
