@@ -27,6 +27,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { AlertModalComponent } from './core/modal/alert-modal/alert-modal.component';
+import { CommentsDialogComponent } from './dialogs/comments-dialog/comments-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { AlertModalComponent } from './core/modal/alert-modal/alert-modal.compon
     RegisterComponent,
     HomeComponent,
     AlertModalComponent,
+    CommentsDialogComponent,
   ],
   imports: [
     RouterModule.forRoot(APP_ROUTES),
