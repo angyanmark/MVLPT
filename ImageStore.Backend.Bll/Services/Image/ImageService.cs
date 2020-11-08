@@ -139,7 +139,7 @@ namespace ImageStore.Backend.Bll.Services.Image
                     Id = comment.Id,
                     Commenter = comment.Commenter.UserName,
                     Text = comment.Text,
-                    Date = comment.Date
+                    Date = DateTime.SpecifyKind(comment.Date, DateTimeKind.Utc)
                 }).ToListAsync();
         }
 

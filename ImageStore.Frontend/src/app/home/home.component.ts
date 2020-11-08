@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ImageClient, ImageDto } from '../api/app.generated';
 import { SnackbarService } from '../core/snackbar/snackbar.service';
+import { CommentsDialogComponent } from '../dialogs/comments-dialog/comments-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -14,12 +16,13 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private imageClient: ImageClient,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.imageClient.getImages().subscribe(
-      (r) => { this.images = r; this.filteredImages = this.images},
+      (r) => { this.images = r; this.filteredImages = this.images },
       (error) => this.snackbarService.openError(error.detail)
     );
   }
@@ -27,6 +30,13 @@ export class HomeComponent implements OnInit {
   onSearch(value: String) {
     this.searchValue = value;
     this.filteredImages = this.images.filter(i => i.fileName.toLowerCase().includes(this.searchValue.toLowerCase()));
+  }
+
+  openCommentsDialog(id: number) {
+    this.dialog.open(CommentsDialogComponent, {
+      width: '720px',
+      data: { id: id }
+    });
   }
 
   uploadFile(files): void {
