@@ -3,7 +3,7 @@ target_compile_options(caff-parser
     PRIVATE 
     $<$<CONFIG:Debug>: -O0 -g>
     $<$<CONFIG:Release>: -O2>
-    -Wall -Wextra -Wconversion -pedantic
+    -Wall -pedantic
     )
 target_compile_features(caff-parser PUBLIC cxx_std_17)
 target_include_directories(caff-parser

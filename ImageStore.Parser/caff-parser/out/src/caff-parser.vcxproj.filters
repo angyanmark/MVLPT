@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Parser\caff-parser\src\caff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Parser\caff-parser\src\caff_parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Parser\caff-parser\src\ciff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Parser\caff-parser\include\caff.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Parser\caff-parser\include\ciff.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Parser\caff-parser\include\parsing_error.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Parser\caff-parser\include\util.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Parser\caff-parser\third_party\lodepng\lodepng.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Parser\caff-parser\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{F0DED44F-CD4F-32B4-AFF9-BD8CD18AA51F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{2CDEBDFA-96C8-3255-8D0E-83FEC3DF0E2F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
