@@ -1,4 +1,0 @@
-C:/Users/angya/source/repos/MVLPT/ImageStore.Parser/caff-parser/out/CMakeFiles/ALL_BUILD.dir
-C:/Users/angya/source/repos/MVLPT/ImageStore.Parser/caff-parser/out/CMakeFiles/ZERO_CHECK.dir
-C:/Users/angya/source/repos/MVLPT/ImageStore.Parser/caff-parser/out/src/CMakeFiles/caff-parser.dir
-C:/Users/angya/source/repos/MVLPT/ImageStore.Parser/caff-parser/out/third_party/CMakeFiles/lodepng.dir

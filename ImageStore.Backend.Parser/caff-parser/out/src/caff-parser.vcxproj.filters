@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Backend.Parser\caff-parser\src\caff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Backend.Parser\caff-parser\src\caff_parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Backend.Parser\caff-parser\src\ciff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Backend.Parser\caff-parser\include\caff.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Backend.Parser\caff-parser\include\ciff.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Backend.Parser\caff-parser\include\parsing_error.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Backend.Parser\caff-parser\include\util.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Backend.Parser\caff-parser\third_party\lodepng\lodepng.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\angya\source\repos\MVLPT\ImageStore.Backend.Parser\caff-parser\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{EC2276E2-EDE3-3ABC-9AC6-02DA7C2B97C9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{EA9149AE-3928-3B3F-8077-0E0B06652337}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

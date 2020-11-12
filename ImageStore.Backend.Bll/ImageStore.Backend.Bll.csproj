@@ -11,7 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ImageStore.Backend.Common\ImageStore.Backend.Common.csproj" />
     <ProjectReference Include="..\ImageStore.Backend.Dal\ImageStore.Backend.Dal.csproj" />
-    <ProjectReference Include="..\ImageStore.Parser\ImageStore.Parser.csproj" />
+    <ProjectReference Include="..\ImageStore.Backend.Parser\ImageStore.Backend.Parser.csproj" />
   </ItemGroup>
 
 </Project>
