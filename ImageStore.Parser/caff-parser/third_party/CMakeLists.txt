@@ -3,7 +3,7 @@ target_compile_options(lodepng
     PRIVATE 
     $<$<CONFIG:Debug>: -O0 -g>
     $<$<CONFIG:Release>: -O2>
-    -Wall -Wextra -pedantic
+    -Wall -pedantic
     )
 target_compile_features(lodepng PUBLIC cxx_std_17)
 target_sources(lodepng

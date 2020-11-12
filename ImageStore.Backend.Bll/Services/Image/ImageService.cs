@@ -3,6 +3,7 @@ using ImageStore.Backend.Common.Exceptions;
 using ImageStore.Backend.Common.Options;
 using ImageStore.Backend.Dal;
 using ImageStore.Backend.Dal.Entities;
+using ImageStore.Parser;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -77,42 +78,7 @@ namespace ImageStore.Backend.Bll.Services.Image
 
             if (extension == ".caff")
             {
-                var startInfo = new ProcessStartInfo("caff-parser.exe");
-                var hexData = "";
-                startInfo.UseShellExecute = false;
-                startInfo.RedirectStandardOutput = true;
-                startInfo.Arguments = originalExtensionPath;
-                var process = new Process {StartInfo = startInfo};
-                var skip = 0;
-                process.OutputDataReceived += (sender, args) =>
-                {
-                    if (args.Data is null) return;
-                    if (args.Data.Length == 1)
-                    {
-                        skip = int.Parse(args.Data);
-                        return;
-                    }
-
-                    if (skip != 0)
-                    {
-                        skip--;
-                        return;
-                    }
-
-                    hexData += args.Data;
-                };
-                process.Start();
-                process.BeginOutputReadLine();
-
-                process.WaitForExit();
-
-                var bytesCount = (hexData.Length) / 2;
-                var bytes = new byte[bytesCount];
-                for (var x = 0; x < bytesCount; ++x)
-                {
-                    bytes[x] = Convert.ToByte(hexData.Substring(x * 2, 2), 16);
-                }
-
+                var bytes = ParserService.ParseCaff(originalExtensionPath);
                 await File.WriteAllBytesAsync(pngFilePath, bytes).ConfigureAwait(false);
             }
 
