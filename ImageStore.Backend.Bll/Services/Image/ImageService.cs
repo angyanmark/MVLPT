@@ -39,7 +39,7 @@ namespace ImageStore.Backend.Bll.Services.Image
                 Id = image.Id,
                 FileName = image.OriginalFileName,
                 Url = $"/images/{image.FileName}",
-                ThumbnailUrl = $"/thumbnails/{image.FileName}",
+                ThumbnailUrl = $"/thumbnails/{image.FileName}.png",
                 Uploader = image.Uploader.UserName
             }).ToListAsync();
         }
@@ -50,36 +50,28 @@ namespace ImageStore.Backend.Bll.Services.Image
             if (string.IsNullOrEmpty(extension) || !_imageOptions.AllowedFileExtensions.Contains(extension))
                 throw new ImageStoreException($"'{extension}' extension is not allowed");
 
-            var imageGuid = Guid.NewGuid();
-            var pngName = imageGuid + ".png";
-            var originalExtensionFile = imageGuid + extension;
+            var fileName = Guid.NewGuid().ToString();
+            var thumbnailName = fileName + ".png";
+
+            var filePath = Path.Combine(_imageOptions.RootPath, _imageOptions.FilesPath, fileName);
+            var thumbnailPath = Path.Combine(_imageOptions.RootPath, _imageOptions.ThumbnailsPath, thumbnailName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            var thumbnailBytes = ParserService.ParseCaff(filePath);
+            await File.WriteAllBytesAsync(thumbnailPath, thumbnailBytes);
 
             var image = new Dal.Entities.Image
             {
-                FileName = extension == ".caff" ? pngName : originalExtensionFile,
+                FileName = fileName,
                 OriginalFileName = file.FileName,
                 Uploader = await _userManager.GetUserAsync(_user)
             };
 
             _dbContext.Images.Add(image);
-
-            var imagesFolderPath = Path.Combine(_imageOptions.RootPath, _imageOptions.FilesPath);
-            var pngFilePath = Path.Combine(imagesFolderPath, pngName);
-            var originalExtensionPath = Path.Combine(imagesFolderPath, originalExtensionFile);
-
-            if (!Directory.Exists(imagesFolderPath))
-                Directory.CreateDirectory(imagesFolderPath);
-
-            using (var stream = new FileStream(originalExtensionPath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            if (extension == ".caff")
-            {
-                var bytes = ParserService.ParseCaff(originalExtensionPath);
-                await File.WriteAllBytesAsync(pngFilePath, bytes).ConfigureAwait(false);
-            }
 
             await _dbContext.SaveChangesAsync();
 
@@ -88,7 +80,7 @@ namespace ImageStore.Backend.Bll.Services.Image
                 Id = image.Id,
                 FileName = image.OriginalFileName,
                 Url = $"/images/{image.FileName}",
-                ThumbnailUrl = $"/thumbnails/{image.FileName}",
+                ThumbnailUrl = $"/thumbnails/{image.FileName}.png",
                 Uploader = image.Uploader.UserName
             };
         }
@@ -99,14 +91,18 @@ namespace ImageStore.Backend.Bll.Services.Image
             if (image is null)
                 throw new ImageStoreException($"File with id '{id}' does not exist");
 
-            _dbContext.Images.Remove(image);
-
             var filePath = Path.Combine(_imageOptions.RootPath, _imageOptions.FilesPath, image.FileName);
+            var thumbnailPath = Path.Combine(_imageOptions.RootPath, _imageOptions.ThumbnailsPath, image.FileName + ".png");
+
+            _dbContext.Images.Remove(image);
 
             await _dbContext.SaveChangesAsync();
 
             if (File.Exists(filePath)) 
                 File.Delete(filePath);
+
+            if (File.Exists(thumbnailPath))
+                File.Delete(thumbnailPath);
         }
 
         public async Task<CommentDto> PostCommentAsync(int imageId, string text)

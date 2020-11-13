@@ -158,7 +158,8 @@ namespace ImageStore.Backend.Web
                         context.Context.Response.Redirect("/");
                 },
                 FileProvider = new PhysicalFileProvider(filesPath),
-                RequestPath = new PathString("/images")
+                RequestPath = new PathString("/images"),
+                ServeUnknownFileTypes = true
             });
 
             app.UseStaticFiles(new StaticFileOptions
@@ -168,8 +169,7 @@ namespace ImageStore.Backend.Web
                     if (!context.Context.User.Identity.IsAuthenticated)
                         context.Context.Response.Redirect("/");
                 },
-                // TODO: ide majd thumbnailsPath
-                FileProvider = new PhysicalFileProvider(filesPath),
+                FileProvider = new PhysicalFileProvider(thumbnailsPath),
                 RequestPath = new PathString("/thumbnails")
             });
 
