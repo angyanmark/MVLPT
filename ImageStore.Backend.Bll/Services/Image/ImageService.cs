@@ -62,6 +62,15 @@ namespace ImageStore.Backend.Bll.Services.Image
             }
 
             var thumbnailBytes = ParserService.ParseCaff(filePath);
+
+            if (thumbnailBytes.Length == 0)
+            {
+                if (File.Exists(filePath))
+                    File.Delete(filePath);
+
+                throw new ImageStoreException("Corrupted .caff file");
+            }
+
             await File.WriteAllBytesAsync(thumbnailPath, thumbnailBytes);
 
             var image = new Dal.Entities.Image
