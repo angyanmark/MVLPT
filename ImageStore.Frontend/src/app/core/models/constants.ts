@@ -7,4 +7,4 @@ export const allRoles = () => {
   return Object.keys(Roles).map((x) => Roles[x]);
 };
 
-export const FormAutosaveDelay: number = 2000;
+export const FormAutosaveDelay = 2000;

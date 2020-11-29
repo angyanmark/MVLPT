@@ -1,10 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanLoad, Route, CanActivateChild } from '@angular/router';
+import {
+  Router,
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  CanLoad,
+  Route,
+  CanActivateChild,
+} from '@angular/router';
 
 import { CredentialsService } from './credentials.service';
 
 @Injectable({
-  providedIn: 'root' // ADDED providedIn root here.
+  providedIn: 'root', // ADDED providedIn root here.
 })
 export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(private router: Router, private credentialsService: CredentialsService) {}
@@ -28,7 +36,10 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
     return true;
   }
 
-  private canActivateItem(routeSnapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  private canActivateItem(
+    routeSnapshot: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): boolean {
     // Auth
     if (!this.credentialsService.isAuthenticated()) {
       this.router.navigate(['/login'], { queryParams: { redirect: state.url }, replaceUrl: true });

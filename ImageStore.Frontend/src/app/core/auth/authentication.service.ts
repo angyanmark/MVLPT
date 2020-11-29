@@ -1,14 +1,13 @@
-import { RegisterDto } from './../../api/app.generated';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { Credentials, CredentialsService } from './credentials.service';
-import { AccountClient, LoginDto } from '../../api/app.generated';
 import { map } from 'rxjs/operators';
-import { Token } from '../models/token';
 import * as jwtDecode from 'jwt-decode';
 import { SnackbarService } from 'src/app/core/snackbar/snackbar.service';
 import { Router } from '@angular/router';
+import { Token } from '../models/token';
+import { AccountClient, LoginDto, RegisterDto } from '../../api/app.generated';
+import { Credentials, CredentialsService } from './credentials.service';
 
 export interface LoginContext {
   username: string;
@@ -22,7 +21,7 @@ export class AuthenticationService {
     private credentialsService: CredentialsService,
     private accountClient: AccountClient,
     private snackbarService: SnackbarService,
-    private router: Router
+    private router: Router,
   ) {}
 
   /**
@@ -48,7 +47,7 @@ export class AuthenticationService {
           } as Credentials;
           this.credentialsService.setCredentials(data, context.remember);
           return data;
-        })
+        }),
       );
   }
 
@@ -60,7 +59,7 @@ export class AuthenticationService {
       },
       (error) => {
         this.snackbarService.openError(error.detail);
-      }
+      },
     );
     return of();
   }

@@ -13,7 +13,9 @@ import { CommentsDialogComponent } from '../dialogs/comments-dialog/comments-dia
 })
 export class HomeComponent implements OnInit {
   searchValue: String = '';
+
   images: ImageDto[] = [];
+
   filteredImages: ImageDto[] = [];
 
   constructor(
@@ -21,8 +23,8 @@ export class HomeComponent implements OnInit {
     private credentialsService: CredentialsService,
     private imageClient: ImageClient,
     private snackbarService: SnackbarService,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.getImages();
@@ -30,20 +32,25 @@ export class HomeComponent implements OnInit {
 
   getImages(): void {
     this.imageClient.getImages().subscribe(
-      (r) => { this.images = r; this.filteredImages = this.images },
-      (error) => this.snackbarService.openError(error.detail)
+      (r) => {
+        this.images = r;
+        this.filteredImages = this.images;
+      },
+      (error) => this.snackbarService.openError(error.detail),
     );
   }
 
   onSearch(value: String): void {
     this.searchValue = value;
-    this.filteredImages = this.images.filter(i => i.fileName.toLowerCase().includes(this.searchValue.toLowerCase()));
+    this.filteredImages = this.images.filter((i) =>
+      i.fileName.toLowerCase().includes(this.searchValue.toLowerCase()),
+    );
   }
 
   openCommentsDialog(id: number): void {
     this.dialog.open(CommentsDialogComponent, {
       width: '720px',
-      data: { id: id }
+      data: { id },
     });
   }
 
@@ -58,7 +65,7 @@ export class HomeComponent implements OnInit {
               this.getImages();
               this.snackbarService.openSuccess('Delete successful');
             },
-            (error) => this.snackbarService.openError(error.detail)
+            (error) => this.snackbarService.openError(error.detail),
           );
         }
       });
@@ -66,8 +73,8 @@ export class HomeComponent implements OnInit {
 
   uploadFile(files): void {
     if (files.length !== 0) {
-      let file = files[0] as File;
-      let fileParameter = {
+      const file = files[0] as File;
+      const fileParameter = {
         fileName: file.name,
         data: file,
       };
@@ -79,7 +86,7 @@ export class HomeComponent implements OnInit {
         },
         (error) => {
           this.snackbarService.openError(error.detail);
-        }
+        },
       );
     }
   }

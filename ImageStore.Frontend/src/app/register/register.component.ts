@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthenticationService } from '../core/auth/authentication.service';
 import { finalize } from 'rxjs/operators';
 import { RegisterDto } from 'src/app/api/app.generated';
+import { AuthenticationService } from '../core/auth/authentication.service';
 
 @Component({
   selector: 'app-register',
@@ -11,21 +11,16 @@ import { RegisterDto } from 'src/app/api/app.generated';
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
+
   hidePassword: boolean;
 
-  constructor(
-    private fb: FormBuilder,
-    private authenticationService: AuthenticationService
-  ) {}
+  constructor(private fb: FormBuilder, private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
     this.hidePassword = true;
 
     this.form = this.fb.group({
-      username: [
-        '',
-        [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')],
-      ],
+      username: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
@@ -43,7 +38,7 @@ export class RegisterComponent implements OnInit {
           .pipe(
             finalize(() => {
               this.form.markAsPristine();
-            })
+            }),
           )
           .subscribe();
       } catch (err) {}

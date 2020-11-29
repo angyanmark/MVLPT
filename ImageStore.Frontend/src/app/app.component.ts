@@ -10,17 +10,17 @@ import { ModalService } from './core/modal/modal.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'ImageStore';
+
   readonly roles = Roles;
 
   constructor(
     private authenticationService: AuthenticationService,
     private modalService: ModalService,
     public credentialsService: CredentialsService,
-    private router: Router
+    private router: Router,
   ) {}
-  ngOnInit(): void {}
 
   logout(): void {
     this.modalService

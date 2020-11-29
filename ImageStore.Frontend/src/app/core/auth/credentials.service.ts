@@ -21,8 +21,7 @@ export class CredentialsService {
 
   constructor() {
     const savedCredentials =
-      sessionStorage.getItem(credentialsKey) ||
-      localStorage.getItem(credentialsKey);
+      sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
     }
@@ -41,9 +40,7 @@ export class CredentialsService {
    * @return True if the user is an administrator
    */
   isAdmin(): boolean {
-    return (
-      this.isAuthenticated() && this.credentials.roles?.includes(Roles.Admin)
-    );
+    return this.isAuthenticated() && this.credentials.roles?.includes(Roles.Admin);
   }
 
   isInRole(role: string): boolean {

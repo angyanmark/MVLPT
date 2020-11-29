@@ -13,7 +13,7 @@ export class ModalService {
     title: string = '',
     cancellable: boolean = false,
     confirmText: string = 'Ok',
-    cancelText: string = 'Cancel'
+    cancelText: string = 'Cancel',
   ) => {
     const dialogRef = this.dialog.open(AlertModalComponent, {
       width: '500px',

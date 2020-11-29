@@ -8,13 +8,14 @@ import { SnackbarService } from 'src/app/core/snackbar/snackbar.service';
 @Component({
   selector: 'app-comments-dialog',
   templateUrl: './comments-dialog.component.html',
-  styleUrls: ['./comments-dialog.component.scss']
+  styleUrls: ['./comments-dialog.component.scss'],
 })
 export class CommentsDialogComponent implements OnInit {
-
   image_id: number;
+
   comments: CommentDto[] = [];
-  comment: string = '';
+
+  comment = '';
 
   constructor(
     private modalService: ModalService,
@@ -22,7 +23,8 @@ export class CommentsDialogComponent implements OnInit {
     private imageClient: ImageClient,
     private snackbarService: SnackbarService,
     public dialogRef: MatDialogRef<CommentsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data) {
+    @Inject(MAT_DIALOG_DATA) public data,
+  ) {
     this.image_id = data.id;
   }
 
@@ -33,7 +35,7 @@ export class CommentsDialogComponent implements OnInit {
   getComments(): void {
     this.imageClient.getComments(this.image_id).subscribe(
       (r) => (this.comments = r),
-      (error) => this.snackbarService.openError(error.detail)
+      (error) => this.snackbarService.openError(error.detail),
     );
   }
 
@@ -48,7 +50,7 @@ export class CommentsDialogComponent implements OnInit {
               this.getComments();
               this.snackbarService.openSuccess('Delete successful');
             },
-            (error) => this.snackbarService.openError(error.detail)
+            (error) => this.snackbarService.openError(error.detail),
           );
         }
       });
@@ -62,7 +64,7 @@ export class CommentsDialogComponent implements OnInit {
       },
       (error) => {
         this.snackbarService.openError(error.detail);
-      }
+      },
     );
   }
 

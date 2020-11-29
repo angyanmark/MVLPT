@@ -6,16 +6,18 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './alert-modal.component.html',
   styleUrls: ['./alert-modal.component.scss'],
 })
-export class AlertModalComponent implements OnInit {
+export class AlertModalComponent {
   @Input() title: string;
+
   @Input() message: string;
+
   @Input() confirmText: string;
+
   @Input() cancelText: string;
+
   @Input() cancellable: boolean;
 
   constructor(private dialogRef: MatDialogRef<AlertModalComponent>) {}
-
-  ngOnInit() {}
 
   confirm = () => {
     this.dialogRef.close(true);

@@ -1,4 +1,3 @@
-import { ModalService } from './../modal/modal.service';
 import { Injectable } from '@angular/core';
 import {
   Router,
@@ -9,6 +8,7 @@ import {
   Route,
   CanActivateChild,
 } from '@angular/router';
+import { ModalService } from '../modal/modal.service';
 
 import { CredentialsService } from './credentials.service';
 import { allRoles } from '../models/constants';
@@ -20,20 +20,14 @@ export class RoleGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(
     private router: Router,
     private credentialsService: CredentialsService,
-    private modalService: ModalService
+    private modalService: ModalService,
   ) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     return this.canActivateItem(route, state);
   }
 
-  canActivateChild(
-    childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
+  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     return this.canActivateItem(childRoute, state);
   }
 
@@ -48,7 +42,7 @@ export class RoleGuard implements CanActivate, CanActivateChild, CanLoad {
 
   private canActivateItem(
     routeSnapshot: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot,
   ): boolean {
     // Role
     if (!this.checkUserRoleForRoute(routeSnapshot.routeConfig)) {
@@ -66,7 +60,7 @@ export class RoleGuard implements CanActivate, CanActivateChild, CanLoad {
         ? route.data.allowedRoles
         : allRoles();
 
-    var allowed: boolean = false;
+    let allowed = false;
     allowedRoles.forEach((role: string) => {
       if (this.credentialsService.isInRole(role)) {
         allowed = true;

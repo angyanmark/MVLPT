@@ -1,9 +1,9 @@
-import { AuthenticationService } from '../core/auth/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SnackbarService } from 'src/app/core/snackbar/snackbar.service';
+import { AuthenticationService } from '../core/auth/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +12,16 @@ import { SnackbarService } from 'src/app/core/snackbar/snackbar.service';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
+
   loginInvalid: boolean;
+
   hidePassword: boolean;
 
   constructor(
     private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private router: Router,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +43,7 @@ export class LoginComponent implements OnInit {
           .pipe(
             finalize(() => {
               this.form.markAsPristine();
-            })
+            }),
           )
           .subscribe(
             () => {
@@ -50,7 +52,7 @@ export class LoginComponent implements OnInit {
             },
             (error) => {
               this.snackbarService.openError(error.detail);
-            }
+            },
           );
       } catch (err) {
         this.loginInvalid = true;
