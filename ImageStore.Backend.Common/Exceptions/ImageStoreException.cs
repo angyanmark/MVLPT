@@ -13,5 +13,17 @@ namespace ImageStore.Backend.Common.Exceptions
         {
             StatusCode = statusCode;
         }
+
+        public ImageStoreException() : base()
+        {
+        }
+
+        public ImageStoreException(string message) : base(message)
+        {
+        }
+
+        public ImageStoreException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }

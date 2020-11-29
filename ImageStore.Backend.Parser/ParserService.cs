@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace ImageStore.Backend.Parser
 {
-    public class ParserService
+    public static class ParserService
     {
         public static byte[] ParseCaff(string path)
         {
