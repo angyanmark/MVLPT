@@ -1,6 +1,6 @@
 # MVLPT 👑
 
-Computer Security Homework 2020
+Computer Security Homework 2020, Budapest University of Technology and Economics
 
 ## How to start up project
 
